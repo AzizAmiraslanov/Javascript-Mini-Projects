@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Task 4</title>
+
+</head>
+
+<body>
+    <h1>Word Game</h1>
+    <p id="word"></p>
+    <form>
+        <input type="text" id="guess" />
+        <input type="submit" value="Check" />
+    </form>
+    <p id="message"></p>
+
+
+    <script>
+        // Kelimelerin listesi
+        var words = ["JavaScript", "HTML", "CSS", "OpenAI", "Python", "Java", "Ruby", "PHP", "C++", "Swift"];
+
+        // HTML elementlerine erişim
+        var wordElement = document.getElementById("word");
+        var guessElement = document.getElementById("guess");
+        var messageElement = document.getElementById("message");
+
+        var correctGuessesElement = document.createElement("p");
+        var wrongGuessesElement = document.createElement("p");
+
+
+        // Oyun için değişkenler
+        var currentWordIndex = 0;
+        var wrongGuesses = 0;
+        var correctGuesses = 0;
+
+        // Sayıları gösteren p elementlerinin ayarlanması
+        correctGuessesElement.textContent = "Correct guesses: " + correctGuesses;
+        wrongGuessesElement.textContent = "Wrong guesses: " + wrongGuesses;
+        document.body.insertBefore(correctGuessesElement, wordElement);
+        document.body.insertBefore(wrongGuessesElement, wordElement);
+
+        // İlk kelimenin gösterilmesi
+        setTimeout(showNextWord, 2000);
+
+        // Form gönderildiğinde çalışacak fonksiyon
+        document.querySelector("form").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            // Tahminin kontrolü
+            var guess = guessElement.value.toLowerCase();
+            var currentWord = words[currentWordIndex].toLowerCase();
+
+            if (guess === currentWord) {
+                // Doğru tahmin
+                guessElement.value = "";
+                wrongGuesses = 0;
+                correctGuesses++;
+                currentWordIndex++;
+
+                // Sonraki kelimenin gösterilmesi
+                if (currentWordIndex < words.length) {
+                    setTimeout(showNextWord, 1000);
+                } else {
+                    // Tüm kelimeler doğru tahmin edildi
+                    messageElement.textContent = "Congratulations! You won!";
+                }
+            } else {
+                // Yanlış tahmin
+                wrongGuesses++;
+                wrongGuessesElement.textContent = "Wrong guesses: " + wrongGuesses;
+
+
+                if (wrongGuesses >= 3) {
+                    // Oyun bitti
+                    messageElement.textContent = "Game over!";
+                    guessElement.disabled = true;
+                } else {
+                    // Tekrar aynı kelimeyi göster
+                    showNextWord();
+                }
+            }
+            // Doğru tahminlerin sayısını güncelle
+            correctGuessesElement.textContent = "Correct guesses: " + correctGuesses;
+        });
+
+        // Bir sonraki kelimenin gösterilmesi
+        function showNextWord() {
+            messageElement.textContent = "";
+            wordElement.textContent = words[currentWordIndex];
+
+            // Kelimenin ekranda gösterilmesinden 1 saniye sonra kullanıcıya tahmin etmesi için bir girdi kutusu gösterilir
+            setTimeout(function () {
+                wordElement.textContent = "";
+
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>

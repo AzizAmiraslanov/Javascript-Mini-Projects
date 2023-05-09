@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="./index_game.css">
+    <title>Task 8</title>
+
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body,
+        html {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .result {
+            width: 500px;
+            height: 100px;
+            background-color: rebeccapurple;
+            color: white;
+            text-align: center;
+            font-size: 30px;
+            border: 1px solid white;
+
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 500px;
+            height: 500px;
+            background-color: rebeccapurple;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+
+        #oyun_tablosu {
+            width: 400px;
+            height: 400px;
+            background-color: red;
+        }
+
+        tr,td:hover {
+            cursor: pointer;
+        }
+
+        tr {
+            width: 100%;
+            background-color: black;
+        }
+
+        td {
+            text-align: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        #oyun_durumu {
+            width: 500px;
+            height: 50px;
+            background-color: rebeccapurple;
+            color: white;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid white;
+        }
+    </style>
+</head>
+
+<body onload="oyunu_baslat()">
+    <h1>Dilimi Bozan KArakterleri isaretleyiniz</h1>
+    <div class="result">
+        <p>Doğru: <span id="dogru">0</span></p>
+        <p>Yanlış: <span id="yanlis">0</span></p>
+    </div>
+    <div class="container">
+        <table id="oyun_tablosu">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+    </div>
+    <p id="oyun_durumu"></p>
+
+
+    <script>
+        var dogru_sayisi = 0;
+        var yanlis_sayisi = 0;
+        var kalan_yanlis = 3;
+
+        function oyunu_baslat() {
+            var oyun_tablosu = document.getElementById("oyun_tablosu");
+            var hucreler = oyun_tablosu.getElementsByTagName("td");
+            var rastgele_indexler = [];
+
+            // 37 adet 9 rakamı oluşturma
+            for (var i = 0; i < 37; i++) {
+                var hucre_index = Math.floor(Math.random() * hucreler.length);
+                while (rastgele_indexler.indexOf(hucre_index) != -1) {
+                    hucre_index = Math.floor(Math.random() * hucreler.length);
+                }
+                rastgele_indexler.push(hucre_index);
+                hucreler[hucre_index].innerHTML = "n";
+            }
+
+            // 3 adet 6 rakamı oluşturma
+            for (var i = 0; i < 3; i++) {
+                var hucre_index = Math.floor(Math.random() * hucreler.length);
+                while (rastgele_indexler.indexOf(hucre_index) != -1 || hucreler[hucre_index].innerHTML == "p") {
+                    hucre_index = Math.floor(Math.random() * hucreler.length);
+                }
+                hucreler[hucre_index].innerHTML = "p";
+            }
+            // 6 rakamı tıklama event'lerini ekleme
+            for (var i = 0; i < hucreler.length; i++) {
+                hucreler[i].addEventListener("click", function () {
+                    if (this.innerHTML == "p") {
+                        dogru_sayisi++;
+                        document.getElementById("dogru").innerHTML = dogru_sayisi;
+                        if (dogru_sayisi == 3) {
+                            document.getElementById("oyun_durumu").innerHTML = "Oyun bitti, Qalibsiniz!";
+                        }
+                    } else {
+                        yanlis_sayisi++;
+                        document.getElementById("yanlis").innerHTML = yanlis_sayisi;
+                        kalan_yanlis--;
+                        if (kalan_yanlis == 0) {
+                            document.getElementById("oyun_durumu").innerHTML = "Oyun bitti, Uduzdunuz!";
+                            oyun_tablosu.style.pointerEvents = "none";
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

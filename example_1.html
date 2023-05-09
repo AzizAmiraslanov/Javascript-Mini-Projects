@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Task 1</title>
+    <style>
+        #container {
+            width: 600px;
+            height: 500px;
+            position: relative;
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            /* background-color: red; */
+        }
+    </style>
+    
+    <script>
+        window.onload = function () {
+            setTimeout(showWords, 2000);
+        };
+
+        function showWords() {
+            var container = document.getElementById("container");
+            container.innerHTML += "<div style='position: absolute; top: 0px; left: 0px;'>Hızlı</div>";
+            setTimeout(function () {
+                container.innerHTML += "<div style='position: absolute; top: 0px; right: 0px;'>Oku</div>";
+            }, 1000);
+            setTimeout(function () {
+                container.innerHTML += "<div style='position: absolute; bottom: 0px; left: 0px;'>Çabuk</div>";
+            }, 2000);
+            setTimeout(function () {
+                container.innerHTML += "<div style='position: absolute; bottom: 0px; right: 0px;'>Anla</div>";
+                setTimeout(function () {
+                    container.innerHTML = "";
+                    setTimeout(showWords, 2000);
+                }, 2000);
+            }, 3000);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="container"></div>
+</body>
+
+</html>

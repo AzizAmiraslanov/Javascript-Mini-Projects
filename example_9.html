@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .row {
+            width: 500px;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .word {
+            padding: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background-color: gray;
+            border-radius: 5px;
+            margin: 5px;
+            text-align: center;
+        }
+
+        .active {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <div class="column" id="left-column">
+        </div>
+        <div class="column" id="right-column">
+        </div>
+    </div>
+    <script>
+        let words = [
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+            "sdc",
+        ];
+
+        let leftColumn = document.getElementById("left-column");
+        let rightColumn = document.getElementById("right-column");
+        let activeIndex = 0;
+
+
+        for (let i = 0; i < words.length; i++) {
+            let word = document.createElement("div");
+            word.classList.add("word");
+            word.innerText = words[i];
+            if (i % 2 === 0) {
+                leftColumn.appendChild(word);
+            } else {
+                rightColumn.appendChild(word);
+            }
+        }
+
+        setInterval(() => {
+            let currentActiveClass = document.querySelector(".active");
+            if (currentActiveClass) {
+                currentActiveClass.classList.remove("active");
+            }
+            if (activeIndex % 2 === 0) {
+                leftColumn.children[activeIndex / 2].classList.add("active")
+            } else {
+                rightColumn.children[Math.floor(activeIndex / 2)].classList.add("active")
+            }
+            activeIndex = (activeIndex + 1) % words.length;
+        }, 1000);
+    </script>
+</body>
+
+</html>

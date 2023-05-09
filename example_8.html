@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .container {
+            width: 500px;
+            height: 500px;
+            background-color: rebeccapurple;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+
+        }
+
+        span {
+            padding: 20px 0;
+            display: none;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+     
+    <div class="container">
+        <span>merhaba</span>
+        <span>ben artık daha</span>
+        <span>hızlı okuya biliyorum</span>
+        <span>ve daha hızlı anlaya biliyorum</span>
+    </div>
+
+
+
+    <script>
+        function showSpans() {
+            const spans = document.querySelectorAll('.container span');
+            let i = 0;
+            const showNext = () => {
+                if (i >= spans.length) {
+                    // all spans have been shown, hide them after 2 seconds
+                    setTimeout(() => {
+                        spans.forEach(span => {
+                            span.style.display = 'none';
+                        });
+                    }, 2000);
+                    return;
+                }
+                spans[i].style.display = 'block';
+                i++;
+                setTimeout(showNext, 1000);
+            };
+            showNext();
+
+        }
+
+
+
+        function showSpansBackwards() {
+            const spans = document.querySelectorAll('.container span');
+            let container = document.querySelector(".container")
+            container.style.flexDirection = "column-reverse"
+            let i = spans.length - 1;
+            const showNext = () => {
+                if (i < 0) {
+                    // all spans have been shown, show them all at once
+                    setTimeout(() => {
+                        spans.forEach(span => {
+                            span.style.display = 'none';
+                        });
+                    }, 2000);
+                    spans.forEach(span => {
+                        span.style.display = 'block';
+                    });
+                    return;
+                }
+                spans[i].style.display = 'block';
+                i--;
+                setTimeout(showNext, 1000);
+            };
+            showNext();
+
+        }
+
+
+            setTimeout(() => {
+                showSpans()
+            }, 2000);
+
+            setTimeout(() => {
+                showSpansBackwards()
+            }, 10000);
+
+    </script>
+
+
+</body>
+
+</html>

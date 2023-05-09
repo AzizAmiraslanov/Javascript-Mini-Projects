@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Task 2</title>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 10px;
+        width: 500px;
+        height: 500px;
+      }
+      
+      .cell {
+        background-color: #eee;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 80px;
+      }
+      
+      .cell.show {
+        background-color: #f00;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid">
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+    <script>
+      let intervalId = setInterval(showA, 1000);
+
+      function showA() {
+        const cells = document.querySelectorAll('.cell');
+        const randomIndex = Math.floor(Math.random() * cells.length);
+        const randomCell = cells[randomIndex];
+        randomCell.classList.add('show');
+        setTimeout(() => {
+          randomCell.classList.remove('show');
+        }, 1000);
+      }
+      
+      function stop() {
+        clearInterval(intervalId);
+        // sayfayı yenilemek için:
+        alert("Bitdi tekrar baslamak icin sayfayi yenile")
+        // location.reload();
+      }
+      
+      setTimeout(stop, 5000);
+    </script>
+  </body>
+</html>
